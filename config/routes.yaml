@@ -1,0 +1,17 @@
+index:
+   path: /
+   controller: App\Controller\MonController::index
+
+test_var:
+    path: /test_var
+    controller: App\Controller\MonController::test_var
+
+test_attributes:
+    path: test_attributes/{var,'tsy misy'}
+    controller: App\Controller\MonController::test_attributes
+
+fiche_client:
+    path: /fiche_client/{id}
+    controller: App\Controller\MonController::show_fiche_client
+
+

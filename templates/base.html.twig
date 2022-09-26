@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>{% block title %}MCGL v-1.0{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    <!-- CSS only -->
+    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" integrity="sha512-1fPmaHba3v4A7PaUsComSM4TBsrrRGs+/fv0vrzafQ+Rw+siILTiJa0NtFfvGeyY5E182SDTaF5PqP+XOHgJag=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}" integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/toastify.min.css') }}">
+    {#<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-icons.css') }}">#}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    <script src="{{ asset('js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.slim.min.js') }}"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="{{ asset('js/popper.min.js') }}"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"
+            integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+            crossorigin="anonymous"></script>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+
+</head>
+<body>
+<header>
+    <div class="container d-flex align-items-center">
+        <a href="#" class="logo me-auto"><img src="" alt="" class="img-fluid"></a>
+        <nav id="navbar" class="navbar  order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto active" href="/"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Accueil
+                    </a></li>
+
+                {% set url_accueil  = app.request.schemeAndHttpHost ~ path('index') %}
+                {% if app.user %}
+                    <li class="dropdown"><a href="#"><span>Client</span><i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="{{ path('new_client') }}">Saisie d'une fiche</a></li>
+                            <li><a href="{{ path('list_client') }}">Consultation</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown"><a href="#"><span>Formations Sannitaires</span><i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Liste</a></li>
+                            <li><a href="#">Ajouter une entrée</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown"><a href="#"><span>Rapport</span><i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Rapport 1</a></li>
+                            <li><a href="#">Rapport 2</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown"><a href="#"><span>Stock</span><i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Intrant</a></li>
+                            <li><a href="#">Etat de stock</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#"><span>Administrateur</span><i class="bi bi-chevron-down"></i></a>
+                    </li>
+
+                    {% if(app.session.get('page_demande') is defined ) %}
+                        {% set page_demande = app.session.get('page_demande') %}
+                    {% else %}
+                        {{ app.session.set('page_demande','') }}
+                        {% set page_demande = '' %}
+                    {% endif %}
+
+                    {#raha avy niconnecte ilay olona ka efa nisy page nangatahany de averina sokafana#}
+                {% if ( page_demande !='') %}
+
+                    {#averina vide aloha ilay variable de session#}
+                    {{ app.session.set('page_demande', '') }}
+
+                    {#redirigene @ izay page nangatahiny#}
+                    <script type="text/javascript">
+                        window.location = '{{ page_demande }}';
+                    </script>
+
+                {% endif %}
+
+                    {#rehefa tsy connecté ilay client nefa mangataka page akoatry ny accueil#}
+                    {% elseif ( app.user==false and app.request.uri != url_accueil ) %}
+
+                    {#rehefa tsy connecté ilay client nefa mangataka page akoatry ny accueil dia sauvena ny url angatahiny ary asaina milog izy#}
+                    {{ app.session.set('page_demande', app.request.uri ) }}
+
+                    <script type="text/javascript">
+                        window.location = '{{ path('connexion') }}';
+                    </script>
+
+                {% endif %}
+
+                {% if app.user %}
+                    <li><a class="nav-link scrollto active" href="{{ path('deconnexion') }}">Déconnexion</a></li>
+                {% else %}
+                    <li><a class="nav-link scrollto active" href="{{ path('connexion') }}"><i class="fa fa-plug"
+                                                                                              aria-hidden="true"></i>&nbsp;Connexion</a>
+                    </li>
+                    <li><a class="nav-link scrollto active" href="{{ path('app_register') }}"><i class="fa fa-user-plus"
+                                                                                                 aria-hidden="true"></i>&nbsp;Enregistrement</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+    </div>
+</header>
+
+<main>
+    {% block body %}{% endblock %}
+</main>
+
+<footer class="footer primary">
+
+    <div class="container mt-5">
+        <div class="row">  {% block footer %}{% endblock %} </div>
+        <div class="row" style="font-size: 10pt"> Copyright © 2022 - HZA</div>
+        <div class="row">
+            <div class="col-12 justify-content-end text-end">
+                <i class="fa fa-envelope" aria-hidden="true"></i> zoandrianina@gmail.com / <i class="fa fa-phone-square"
+                                                                                              aria-hidden="true"></i>
+                +261 34 72 352 54
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{% block ending_javascripts %}
+
+{% endblock %}
+<script type="text/javascript">
+    function toast(pMessage, pDuration = 2000) {
+        Toastify({
+
+            text: pMessage,
+            duration: pDuration,
+            close: false,
+            position: 'center',
+
+        }).showToast();
+    }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="{{ asset('js/template/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}MCGL v-1.0{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    <script src="{{ asset('js/jquery-3.6.0.min.js')}}"></script>
+    <script src="{{ asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('js/popper.min.js')}}"></script>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+
+</head>
+<body>
+<header>
+    <div class="container d-flex align-items-center">
+        <!--<h1 class="logo me-auto"><a href="index.php">CONSTRUCT</a></h1>-->
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <a href="#" class="logo me-auto"><img src="" alt="" class="img-fluid"></a>
+        <nav id="navbar" class="navbar  order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto active" href="/"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Accueil</a></li>
+                <li><a class="nav-link scrollto active" href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Je créé un nouveau compte</a></li>
+                <li><a class="nav-link scrollto active" href="/connexion"><i class="fa fa-plug" aria-hidden="true"></i>&nbsp;Je me connecte</a></li>
+
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    {% block body %}{% endblock %}
+</main>
+
+<footer class="footer primary">
+
+    <div class="container mt-5">
+        <div class="row" >  {% block footer %}{% endblock %} </div>
+        <div class="row" style="font-size: 10pt">   Copyright © 2021 - HZA  </div>
+    </div>
+</footer>
+
+{% block ending_javascripts %}
+{% endblock %}
+
+</body>
+</html>
