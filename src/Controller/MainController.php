@@ -66,6 +66,13 @@ class MainController extends AbstractController
         return $this->json(['statut' => 'ok']);
     }
 
+    function validateParams($array_params){
+
+        for ($i=0;$i<sizeof($array_params);$i++){
+            if ($array_params[$i]=='NaN') { $array_params[$i]=0 ; }
+        }
+    }
+
     /**
      * @Route("/api/push/rapport/", name="api_push_rapport")
      * @param Request $request
@@ -77,6 +84,7 @@ class MainController extends AbstractController
         $message='';
         // retrieve JSON from POST body
         $jsonStr = file_get_contents('php://input');
+        $jsonStr=str_replace('NaN','0',$jsonStr);
         $jsonObj = json_decode($jsonStr);
         $source = json_decode($jsonObj->data);
         $type = $jsonObj->type;
@@ -87,6 +95,7 @@ class MainController extends AbstractController
         }
 
         foreach ($source as $data) {
+            dump($data);
             $date = new DateTime($data->date);
             $centre = $this->doctrine->getRepository(Centre::class)->find($data->centre);
 
