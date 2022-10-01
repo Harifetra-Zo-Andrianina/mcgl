@@ -97,6 +97,7 @@ class MainController extends AbstractController
         foreach ($source as $data) {
             dump($data);
             $date = new DateTime($data->date);
+            $dateHeure = date('d-m-y h:i:s');
             $centre = $this->doctrine->getRepository(Centre::class)->find($data->centre);
 
             if ($type < 4) {
@@ -119,6 +120,7 @@ class MainController extends AbstractController
                     $rapport->setP10($data->p10);
                 } else {
                     $rapport = new Rapport();
+                    $rapport->setDateSync($dateHeure);
                     $rapport->setType($type);
                     $rapport->setDate($date);
                     $rapport->setLocal($data->num);
@@ -152,6 +154,8 @@ class MainController extends AbstractController
                     $rapport->setRemarque($data->remarque);
                 } else {
                     $rapport = new Rapport();
+                    $rapport->setDateSync($dateHeure);
+                    $rapport->setDateSync($dateHeure);
                     $rapport->setType($type);
                     $rapport->setDate($date);
                     $rapport->setLocal($data->num);
@@ -188,6 +192,7 @@ class MainController extends AbstractController
                     $rapport->setP4($data->p4);
                 } else {
                     $rapport = new Intrant();
+                    $rapport->setDateSync($dateHeure);
                     $rapport->setType($type_intrant);
                     $rapport->setDate($date);
                     $rapport->setLocal($data->num);

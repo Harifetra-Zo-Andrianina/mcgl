@@ -97,6 +97,11 @@ class Rapport
      */
     private $remarque;
 
+    /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
+    private $date_sync;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -290,6 +295,18 @@ class Rapport
     public function setRemarque(?string $remarque): self
     {
         $this->remarque = $remarque;
+
+        return $this;
+    }
+
+    public function getDateSync(): ?string
+    {
+        return $this->date_sync;
+    }
+
+    public function setDateSync(?string $date_sync): self
+    {
+        $this->date_sync = $date_sync;
 
         return $this;
     }

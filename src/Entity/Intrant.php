@@ -62,6 +62,11 @@ class Intrant
      */
     private $centre;
 
+    /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
+    private $date_sync;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +176,18 @@ class Intrant
     public function setCentre(?centre $centre): self
     {
         $this->centre = $centre;
+
+        return $this;
+    }
+
+    public function getDateSync(): ?string
+    {
+        return $this->date_sync;
+    }
+
+    public function setDateSync(?string $date_sync): self
+    {
+        $this->date_sync = $date_sync;
 
         return $this;
     }
