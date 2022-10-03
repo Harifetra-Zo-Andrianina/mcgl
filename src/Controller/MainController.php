@@ -210,6 +210,7 @@ class MainController extends AbstractController
         }
         return $this->json(['message' => 'Les ' . sizeof($source) . ' enregistrements liés aux '.$this->type($type).' ont été enregistrés sur le serveur', 'statut' => 'ok']);
     }
+
     function type($p){
         switch ($p){
             case 1:
@@ -225,5 +226,29 @@ class MainController extends AbstractController
             case 6:
                 return 'Fiche de stock';
         }
+
+
+
+
+    }
+
+    /**
+     * @Route("/api/get/rapport/{centre}", name="api_get_rapport")
+     */
+    public function recupData(Centre $centre): JsonResponse
+    {
+        $res=$this->doctrine->getRepository(Rapport::class)->findBy(['centre'=>$centre->getId()]);
+
+        foreach($res as $element){
+            $rapports[]=$element;
+        }
+
+        $res =$this->doctrine->getRepository(Intrant::class)->findBy(['centre'=>$centre->getId()]);
+
+        foreach($res as $element){
+            $intrants[]=$element;
+        }
+
+        return $this->JSON(['rapport'=>$rapports, 'intrant'=>$intrants]);
     }
 }
