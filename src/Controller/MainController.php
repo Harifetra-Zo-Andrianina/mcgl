@@ -238,13 +238,13 @@ class MainController extends AbstractController
     public function recupData(Centre $centre): JsonResponse
     {
         $res=$this->doctrine->getRepository(Rapport::class)->findBy(['centre'=>$centre->getId()]);
-
+        $rapports=[];
         foreach($res as $element){
             $rapports[]=$element;
         }
 
         $res =$this->doctrine->getRepository(Intrant::class)->findBy(['centre'=>$centre->getId()]);
-
+        $intrants=[];
         foreach($res as $element){
             $intrants[]=$element;
         }
