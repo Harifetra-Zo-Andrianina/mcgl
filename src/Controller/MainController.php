@@ -48,21 +48,11 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/test", name="test")
+     * @Route("/api/test", name="api_test")
      */
 
-    public function test(Request $request, EntityManagerInterface $em): JsonResponse
+    public function test(): JsonResponse
     {
-        $rapport = new Rapport();
-
-        dd(new DateTime('2022-09-19'));
-        //$rapport->setDate($jsonObj->date);
-        $rapport->setLocal('dsqdqs');
-        //$rapport->setModifie(0);
-        //$rapport->setP1($jsonObj->data->p1);
-        //$rapport->setP2($jsonObj->data->p2);
-        $em->persist($rapport);
-        $em->flush();
         return $this->json(['statut' => 'ok']);
     }
 
