@@ -8,9 +8,11 @@ use App\Entity\Rapport;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
 use Psr\Log\LoggerInterface;
@@ -45,6 +47,19 @@ class MainController extends AbstractController
         $result = $this->doctrine->getRepository(Centre::class)->findAll();
         return $this->json(['result' => $result]);
 
+    }
+
+    /**
+     * @Route("/api/get/update", name="api_get_update")
+     */
+    public function getUpdate(): JsonResponse
+    {
+        $myfile = fopen("versions/version.txt", "r") or die($line="Unable to open file!");
+        $line = fgets($myfile);
+        fclose($myfile);
+        $link= 'mcgl_'.$line;
+        //$link->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,'mcgl.apk');
+        return $this->json(['version' => $line, 'link'=>$link]);
     }
 
     /**
