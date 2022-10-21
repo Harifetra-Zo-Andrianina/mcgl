@@ -50,12 +50,7 @@
 
                 {% set url_accueil  = app.request.schemeAndHttpHost ~ path('index') %}
                 {% if app.user %}
-                    <li class="dropdown"><a href="#"><span>Client</span><i class="bi bi-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="{{ path('new_client') }}">Saisie d'une fiche</a></li>
-                            <li><a href="{{ path('list_client') }}">Consultation</a></li>
-                        </ul>
-                    </li>
+
 
                     <li class="dropdown"><a href="#"><span>Formations Sannitaires</span><i class="bi bi-chevron-down"></i></a>
                         <ul>
@@ -130,7 +125,7 @@
     </div>
 </header>
 
-<main>
+<main class="main-frame">
     {% block body %}{% endblock %}
 </main>
 

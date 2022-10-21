@@ -1741,3 +1741,11 @@ section {
 color-adjust: exact;
 -webkit-print-color-adjust: exact;
 }
+
+.main-frame{
+  border-color: #0c4a6e;
+  border-width: 0.3pt;
+  border:thin solid;
+  margin:10px;
+}
+
